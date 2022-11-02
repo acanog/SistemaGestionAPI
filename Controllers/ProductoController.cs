@@ -21,10 +21,16 @@ namespace SistemaGestionAPI.Controllers
             ADO_Producto.ActualizarProducto(producto);
 
         }
-        [HttpDelete]
-        public void Delete([FromBody] Producto producto)
+        [HttpDelete("Eliminar producto")]
+        public void EliminarProducto(long idProducto)
         {
-            ADO_Producto.EliminarProducto(producto);
+            ADO_Producto.EliminarProducto(idProducto);
+
+        }
+        [HttpDelete("Eliminar ProductoVendido")]
+        public void EliminarProductoVendido(long idProducto)
+        {
+            ADO_Producto.EliminarProductoVendido(idProducto);
 
         }
     }

@@ -51,8 +51,9 @@ namespace SistemaGestionAPI.ADO
             }
 
         }
-        public static long CargarVenta(Venta vta)
+        public static long CargarVenta(Venta vta,Venta productoVendido)
         {
+            
             long idVenta;
             SqlConnectionStringBuilder conecctionbuilder = new SqlConnectionStringBuilder();
             conecctionbuilder.DataSource = "DESKTOP-RRAI8UU";
@@ -77,6 +78,13 @@ namespace SistemaGestionAPI.ADO
 
             }
 
+
+        }
+
+
+        internal static void CargarVenta(Venta venta)
+        {
+            throw new NotImplementedException();
         }
     }
 }

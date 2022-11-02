@@ -71,7 +71,7 @@ namespace SistemaGestionAPI.ADO
 
                 //  Punto 2
                 SqlCommand cmd1 = connection.CreateCommand();
-                cmd1.CommandText = "insert into Producto values(Descripciones, Costo, PrecioVenta, Stock, IdUsuario)";
+                cmd1.CommandText = "insert into Producto (Descripciones, Costo, PrecioVenta, Stock, IdUsuario) values(@Descripciones, @Costo, @PrecioVenta, @Stock, @IdUsuario)";
                 cmd1.Parameters.Add(new SqlParameter("Descripciones", SqlDbType.VarChar)).Value = producto.Descripcion;
                 cmd1.Parameters.Add(new SqlParameter("Costo", SqlDbType.VarChar)).Value = producto.Costo;
                 cmd1.Parameters.Add(new SqlParameter("PrecioVenta", SqlDbType.VarChar)).Value = producto.PrecioVenta;
@@ -100,7 +100,7 @@ namespace SistemaGestionAPI.ADO
 
                 //  Punto 2
                 SqlCommand cmd2 = connection.CreateCommand();
-                cmd2.CommandText = "update Producto set Descripciones=@Descripciones, Costo=@Costo, PrecioVenta@PrecioVenta, Stock@Stock, IdUsuario@IdUsuario where Id=@Id";
+                cmd2.CommandText = "update Producto set Descripciones=@Descripciones, Costo=@Costo, PrecioVenta=@PrecioVenta, Stock=@Stock, IdUsuario=@IdUsuario where Id=@Id";
                 cmd2.Parameters.Add(new SqlParameter("@Id", SqlDbType.VarChar)).Value = producto.Id;
                 cmd2.Parameters.Add(new SqlParameter("@Descripciones", SqlDbType.VarChar)).Value = producto.Descripcion;
                 cmd2.Parameters.Add(new SqlParameter("@Costo", SqlDbType.VarChar)).Value = producto.Costo;
@@ -114,9 +114,9 @@ namespace SistemaGestionAPI.ADO
             return productos_Cambiados;
 
         }
-        public static long EliminarProducto(Producto producto)
+        public static Int32 EliminarProducto(long idProducto)
         {
-            int productosEliminados;
+            int productoEliminado;
             SqlConnectionStringBuilder conecctionbuilder = new SqlConnectionStringBuilder();
             conecctionbuilder.DataSource = "DESKTOP-RRAI8UU";
             conecctionbuilder.InitialCatalog = "dbSistemaGestionCoder";
@@ -128,15 +128,39 @@ namespace SistemaGestionAPI.ADO
                 connection.Open();
 
                 //  Punto 2
-                SqlCommand cmd2 = connection.CreateCommand();
-                cmd2.CommandText = "delete Producto where Id=@Id";
-                cmd2.Parameters.Add(new SqlParameter("@Id", SqlDbType.VarChar)).Value = producto.Id;
+                SqlCommand cmd3 = connection.CreateCommand();
+                cmd3.CommandText = "delete Producto where Id=@Id";
+                cmd3.Parameters.Add(new SqlParameter("@Id", SqlDbType.VarChar)).Value = idProducto;
                 connection.Close();
-                productosEliminados = Convert.ToInt32(cmd2.ExecuteNonQuery());
+                productoEliminado = Convert.ToInt32(cmd3.ExecuteNonQuery());
 
             }
 
-            return productosEliminados;
+            return productoEliminado;
+        }
+        public static Int32 EliminarProductoVendido(long idProducto)
+        {
+            int productoEliminado;
+            SqlConnectionStringBuilder conecctionbuilder = new SqlConnectionStringBuilder();
+            conecctionbuilder.DataSource = "DESKTOP-RRAI8UU";
+            conecctionbuilder.InitialCatalog = "dbSistemaGestionCoder";
+            conecctionbuilder.IntegratedSecurity = true;
+            var cs = conecctionbuilder.ConnectionString;
+
+            using (SqlConnection connection = new SqlConnection(cs))
+            {
+                connection.Open();
+
+                //  Punto 2
+                SqlCommand cmd4 = connection.CreateCommand();
+                cmd4.CommandText = "delete ProductoVendido where IdProducto=@Id";
+                cmd4.Parameters.Add(new SqlParameter("@Id", SqlDbType.VarChar)).Value = idProducto;
+                connection.Close();
+                productoEliminado = Convert.ToInt32(cmd4.ExecuteNonQuery());
+
+            }
+
+            return productoEliminado;
         }
     }
 }

@@ -19,19 +19,19 @@ namespace SistemaGestionAPI.Controllers
         {
             return ADO_Usuario.IniciarSesion(nombreUsuario, contraseña);
         }
-        [HttpPost("CrearUsuario")]
+        [HttpPost]
         public void CrearUsuario([FromBody] Usuario usuario)
         {
             ADO_Usuario.CrearUsuario(usuario);
 
         }
-        [HttpPut("ActualizarUsuario")]
+        [HttpPut]
         public void ActualizarUsuario([FromBody] Usuario usuario)
         {
             ADO_Usuario.ActualizarUsuario(usuario);
 
         }
-        [HttpDelete("BorrarUsuario")]
+        [HttpDelete]
         public void BorrarUsuario([FromBody] Usuario usuario)
         {
             ADO_Usuario.BorrarUsuario(usuario);
