@@ -51,9 +51,10 @@ namespace SistemaGestionAPI.ADO
             }
 
         }
-        public static long CargarVenta(Venta vta,Venta productoVendido)
+        public static long CargarVenta(InsertarVenta venta)
         {
-            
+            var listaProductosVendidos = new List<ProductoVendido>();
+            var listaProductos= new List<Producto>();
             long idVenta;
             SqlConnectionStringBuilder conecctionbuilder = new SqlConnectionStringBuilder();
             conecctionbuilder.DataSource = "DESKTOP-RRAI8UU";
@@ -67,11 +68,30 @@ namespace SistemaGestionAPI.ADO
                 //  Punto 4
                 SqlCommand cmd1 = connection.CreateCommand();
                 cmd1.CommandText = "insert into Venta values(@Comentarios,@IdUsuario)";
-                cmd1.Parameters.Add(new SqlParameter("Comentarios", SqlDbType.VarChar)).Value = vta.Comentarios;
-                cmd1.Parameters.Add(new SqlParameter("IdUsuario", SqlDbType.VarChar)).Value = vta.IdUsuario;
+                cmd1.Parameters.Add(new SqlParameter("Comentarios", SqlDbType.VarChar)).Value = venta.Venta.Comentarios;
+                cmd1.Parameters.Add(new SqlParameter("IdUsuario", SqlDbType.VarChar)).Value = venta.Venta.IdUsuario;
 
                 idVenta = Convert.ToInt64(cmd1.ExecuteScalar());
-               
+
+                foreach (var lista in listaProductosVendidos)
+                {
+                    var productovendido = new ProductoVendido();
+                    SqlCommand cmd2 = connection.CreateCommand();
+                    cmd2.CommandText = "insert into ProductoVendido values (Stock=@Stock,IdProducto=@IdProducto,IdVenta=@IdVenta)";
+                    cmd2.Parameters.Add(new SqlParameter("Stock", SqlDbType.VarChar)).Value = productovendido.Stock;
+                    cmd2.Parameters.Add(new SqlParameter("IdProducto", SqlDbType.VarChar)).Value = productovendido.IdProducto;
+                    cmd2.Parameters.Add(new SqlParameter("IdVenta", SqlDbType.VarChar)).Value = productovendido.IdVenta;
+                }
+                foreach (var lista in listaProductos)
+                {
+                    var productovendido = new ProductoVendido();
+                    var producto = new Producto();
+                    SqlCommand cmd3 = connection.CreateCommand();
+                    cmd3.CommandText = "update Producto set Stock=(Stock-@IdStockPV) where Id =@IdStock";
+                    cmd3.Parameters.Add(new SqlParameter("IdStock", SqlDbType.VarChar)).Value = producto.Id;
+                    cmd3.Parameters.Add(new SqlParameter("IdStockPV", SqlDbType.VarChar)).Value = productovendido.Stock;
+                }
+
 
                 connection.Close();
                 return idVenta;
@@ -82,9 +102,6 @@ namespace SistemaGestionAPI.ADO
         }
 
 
-        internal static void CargarVenta(Venta venta)
-        {
-            throw new NotImplementedException();
-        }
+        
     }
 }

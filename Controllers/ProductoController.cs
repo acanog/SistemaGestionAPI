@@ -27,11 +27,6 @@ namespace SistemaGestionAPI.Controllers
             ADO_Producto.EliminarProducto(idProducto);
 
         }
-        [HttpDelete("Eliminar ProductoVendido")]
-        public void EliminarProductoVendido(long idProducto)
-        {
-            ADO_Producto.EliminarProductoVendido(idProducto);
-
-        }
+        
     }
 }

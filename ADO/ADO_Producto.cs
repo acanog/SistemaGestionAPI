@@ -138,29 +138,6 @@ namespace SistemaGestionAPI.ADO
 
             return productoEliminado;
         }
-        public static Int32 EliminarProductoVendido(long idProducto)
-        {
-            int productoEliminado;
-            SqlConnectionStringBuilder conecctionbuilder = new SqlConnectionStringBuilder();
-            conecctionbuilder.DataSource = "DESKTOP-RRAI8UU";
-            conecctionbuilder.InitialCatalog = "dbSistemaGestionCoder";
-            conecctionbuilder.IntegratedSecurity = true;
-            var cs = conecctionbuilder.ConnectionString;
-
-            using (SqlConnection connection = new SqlConnection(cs))
-            {
-                connection.Open();
-
-                //  Punto 2
-                SqlCommand cmd4 = connection.CreateCommand();
-                cmd4.CommandText = "delete ProductoVendido where IdProducto=@Id";
-                cmd4.Parameters.Add(new SqlParameter("@Id", SqlDbType.VarChar)).Value = idProducto;
-                connection.Close();
-                productoEliminado = Convert.ToInt32(cmd4.ExecuteNonQuery());
-
-            }
-
-            return productoEliminado;
-        }
+        
     }
 }

@@ -8,8 +8,8 @@ namespace SistemaGestionAPI.Controllers
     [ApiController]
     public class VentaController : Controller
     {
-        [HttpPost]
-        public static void CargarVenta([FromBody] Venta venta)
+        [HttpPost("Cargar venta")]
+        public void CargarVenta([FromBody] InsertarVenta venta)
             {
                 ADO_Venta.CargarVenta(venta);
             }
